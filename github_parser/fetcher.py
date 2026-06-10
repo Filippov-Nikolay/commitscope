@@ -13,7 +13,7 @@
 """
 
 import logging
-from typing import Optional
+from typing import Any, Optional, cast
 
 from .client import BASE_URL, get
 
@@ -27,7 +27,7 @@ def fetch_commits(
     branch: str,
     token: str | None,
     max_commits: Optional[int] = None,
-) -> list[dict]:
+) -> list[dict[str, Any]]:
     """
     Получает полный список коммитов ветки, обходя пагинацию.
 
@@ -46,13 +46,16 @@ def fetch_commits(
         Список сырых dict-ов от GitHub API, каждый описывает один коммит.
     """
     url = f"{BASE_URL}/repos/{owner}/{repo}/commits"
-    commits: list[dict] = []
+    commits: list[dict[str, Any]] = []
     page = 1
 
     while True:
         # Запрашиваем очередную страницу.
         # sha здесь - это имя ветки, не SHA коммита (параметр GitHub API так называется).
-        batch: list = get(url, token, params={"sha": branch, "per_page": 100, "page": page})
+        batch: list[dict[str, Any]] = cast(
+            list[dict[str, Any]],
+            get(url, token, params={"sha": branch, "per_page": 100, "page": page}),
+        )
 
         if not batch:
             # Пустой ответ - страниц больше нет
@@ -79,7 +82,7 @@ def fetch_commits(
     return commits
 
 
-def fetch_commit_details(owner: str, repo: str, sha: str, token: str | None) -> dict:
+def fetch_commit_details(owner: str, repo: str, sha: str, token: str | None) -> dict[str, Any]:
     """
     Получает подробности одного коммита.
 
@@ -95,10 +98,10 @@ def fetch_commit_details(owner: str, repo: str, sha: str, token: str | None) -> 
         sha: Полный SHA-хэш коммита (40 символов).
     """
     url = f"{BASE_URL}/repos/{owner}/{repo}/commits/{sha}"
-    return get(url, token)
+    return cast(dict[str, Any], get(url, token))
 
 
-def fetch_commit_comments(owner: str, repo: str, sha: str, token: str | None) -> list[dict]:
+def fetch_commit_comments(owner: str, repo: str, sha: str, token: str | None) -> list[dict[str, Any]]:
     """
     Получает список комментариев к коммиту.
 
@@ -109,4 +112,4 @@ def fetch_commit_comments(owner: str, repo: str, sha: str, token: str | None) ->
     Если комментариев нет - GitHub возвращает пустой список [].
     """
     url = f"{BASE_URL}/repos/{owner}/{repo}/commits/{sha}/comments"
-    return get(url, token)
+    return cast(list[dict[str, Any]], get(url, token))

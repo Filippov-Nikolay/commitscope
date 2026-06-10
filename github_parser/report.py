@@ -15,7 +15,7 @@ save_report   - сохраняет отчёт в JSON-файл.
 import json
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 from rich import box
 from rich.console import Console
@@ -41,7 +41,7 @@ _FILE_STATUS_ICONS: dict[str, str] = {
 }
 
 
-def build_entry(raw: dict, details: dict, comments_raw: list[dict]) -> CommitEntry:
+def build_entry(raw: dict[str, Any], details: dict[str, Any], comments_raw: list[dict[str, Any]]) -> CommitEntry:
     """
     Собирает один CommitEntry из трёх сырых словарей GitHub API.
 
@@ -102,7 +102,7 @@ def build_entry(raw: dict, details: dict, comments_raw: list[dict]) -> CommitEnt
     )
 
 
-def _matches_author(raw: dict, authors_lower: set[str]) -> bool:
+def _matches_author(raw: dict[str, Any], authors_lower: set[str]) -> bool:
     """Проверяет, совпадает ли автор коммита с одним из заданных (без учёта регистра)."""
     name  = raw["commit"]["author"]["name"].lower()
     login = (raw.get("author") or {}).get("login", "").lower()
