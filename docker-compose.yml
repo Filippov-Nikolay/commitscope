@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    # Токен читается из .env на хосте и передаётся внутрь контейнера -
+    # в сам образ секрет не попадает
+    env_file:
+      - .env
+    restart: unless-stopped

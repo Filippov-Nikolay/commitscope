@@ -1,0 +1,52 @@
+# CI-пайплайн GitHub Actions
+#
+# Запускается при каждом push в main/dev и при открытии Pull Request в main.
+# Проверяет три вещи: линтер (ruff), типы (mypy) и тесты (pytest).
+# Если хотя бы одна проверка упала - merge заблокирован.
+
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: "Python ${{ matrix.python-version }}"
+    runs-on: ubuntu-latest
+
+    # Проверяем на всех поддерживаемых версиях Python
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      # Получаем код репозитория
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Устанавливаем нужную версию Python
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          # Кэшируем pip-зависимости для ускорения следующих запусков
+          cache: pip
+
+      # Устанавливаем все зависимости (основные + dev)
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      # Линтер: проверяем стиль кода и очевидные ошибки
+      - name: Lint with ruff
+        run: ruff check .
+
+      # Проверка типов: ищем несоответствия type hints
+      - name: Type check with mypy
+        run: mypy github_parser/
+
+      # Запускаем тесты с измерением покрытия кода
+      - name: Run tests with coverage
+        run: pytest --cov=github_parser --cov-report=term-missing
