@@ -1,4 +1,8 @@
-# GitHub Commits Parser
+# commitscope
+
+<div align="center">
+  <img src=".github/assets/banner.png" alt="commitscope banner" width="900">
+</div>
 
 Инструмент для получения коммитов, diff-патчей и комментариев из GitHub-репозитория.  
 Работает в трёх режимах: **CLI** (консоль), **API + Веб-интерфейс** (браузер и JSON), **Docker**.
