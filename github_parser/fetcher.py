@@ -101,7 +101,9 @@ def fetch_commit_details(owner: str, repo: str, sha: str, token: str | None) -> 
     return cast(dict[str, Any], get(url, token))
 
 
-def fetch_commit_comments(owner: str, repo: str, sha: str, token: str | None) -> list[dict[str, Any]]:
+def fetch_commit_comments(
+    owner: str, repo: str, sha: str, token: str | None
+) -> list[dict[str, Any]]:
     """
     Получает список комментариев к коммиту.
 

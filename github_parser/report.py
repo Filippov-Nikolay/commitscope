@@ -41,7 +41,9 @@ _FILE_STATUS_ICONS: dict[str, str] = {
 }
 
 
-def build_entry(raw: dict[str, Any], details: dict[str, Any], comments_raw: list[dict[str, Any]]) -> CommitEntry:
+def build_entry(
+    raw: dict[str, Any], details: dict[str, Any], comments_raw: list[dict[str, Any]]
+) -> CommitEntry:
     """
     Собирает один CommitEntry из трёх сырых словарей GitHub API.
 
