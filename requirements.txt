@@ -1,0 +1,20 @@
+# Зависимости для запуска парсера
+# Установка: pip install -r requirements.txt
+
+# HTTP-запросы к GitHub API
+requests>=2.31.0
+
+# Загрузка переменных окружения из файла .env (токен GitHub и т.д.)
+python-dotenv>=1.0.0
+
+# Красивый вывод в консоль: цвета, таблицы, прогресс-бар
+rich>=13.7.0
+
+# API-сервер
+fastapi>=0.110.0
+
+# ASGI-сервер для запуска FastAPI (uvicorn api:app --reload)
+uvicorn[standard]>=0.27.0
+
+# Нужен FastAPI StaticFiles для раздачи HTML/CSS/JS файлов
+aiofiles>=23.0.0

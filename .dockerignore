@@ -1,0 +1,37 @@
+# Секреты - никогда не должны попасть в образ
+.env
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+
+# Python-артефакты
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Тесты - не нужны в рантайме
+tests/
+
+# Кеши инструментов
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Git и CI
+.git/
+.github/
+
+# IDE
+.idea/
+.vscode/
+
+# ОС
+.DS_Store
+Thumbs.db
+
+# Отчёты парсера
+*_report.json
