@@ -1,0 +1,29 @@
+/* ============================================================
+   hero.css — hero-секция с заголовком и формой поиска
+   ============================================================ */
+
+.hero {
+  background: var(--hero-gradient);
+  border-bottom: 1px solid var(--border-muted);
+  padding: 56px 0 48px;
+  text-align: center;
+}
+
+.hero__title {
+  animation: fade-up 0.5s 0.05s ease both;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #e6edf3 0%, #8b949e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.hero__subtitle {
+  animation: fade-up 0.5s 0.12s ease both;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 36px;
+}

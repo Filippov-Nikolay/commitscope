@@ -1,0 +1,69 @@
+/* ============================================================
+   layout.css — шапка и подвал
+   ============================================================ */
+
+.header {
+  animation: fade-in 0.4s ease both;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.logo__icon {
+  width: 24px;
+  height: 24px;
+  color: var(--text-secondary);
+}
+
+.header__nav {
+  display: flex;
+  gap: 16px;
+}
+
+.header__link {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: color var(--transition);
+}
+
+.header__link:hover {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+/* ============================================================
+   Подвал
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border-muted);
+  padding: 20px 0;
+  margin-top: auto;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}

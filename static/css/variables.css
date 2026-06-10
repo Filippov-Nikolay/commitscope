@@ -1,0 +1,44 @@
+/* ============================================================
+   variables.css — дизайн-токены (GitHub Dark тема)
+   Все цвета, размеры и переходы задаём здесь, чтобы менять
+   тему в одном месте.
+   ============================================================ */
+:root {
+  /* Фоны */
+  --bg-page:     #0d1117;
+  --bg-card:     #161b22;
+  --bg-elevated: #1c2128;
+  --bg-input:    #0d1117;
+  --bg-code:     #161b22;
+
+  /* Границы */
+  --border:       #30363d;
+  --border-muted: #21262d;
+
+  /* Текст */
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  /* Акценты */
+  --blue:   #58a6ff;
+  --green:  #3fb950;
+  --red:    #f85149;
+  --yellow: #d29922;
+  --purple: #bc8cff;
+
+  /* Градиент для hero */
+  --hero-gradient: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%);
+
+  /* Скругления */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Тени */
+  --shadow-card:  0 1px 3px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.2);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,.5), 0 8px 32px rgba(0,0,0,.3);
+
+  /* Переходы */
+  --transition: 0.2s ease;
+}

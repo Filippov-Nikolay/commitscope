@@ -1,0 +1,243 @@
+/* ============================================================
+   commit-card.css — карточка коммита, статистика, тело, тоглы
+   ============================================================ */
+
+.commit-card {
+  animation: fade-up 0.4s ease both;
+  animation-delay: var(--card-delay, 0ms);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition), border-color var(--transition),
+              transform var(--transition);
+}
+
+.commit-card.is-exiting {
+  animation: card-exit 0.26s ease-in both;
+  animation-delay: var(--exit-delay, 0ms);
+  pointer-events: none;
+}
+
+.commit-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: #444c56;
+  transform: translateY(-1px);
+}
+
+/* Верхняя полоска акцента — пропорция добавлений/удалений */
+.commit-card__accent {
+  height: 3px;
+  background: linear-gradient(90deg, var(--green) var(--add-pct), var(--red) var(--add-pct));
+}
+
+.commit-card__body {
+  padding: 16px 20px;
+}
+
+.commit-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #fff;
+  object-fit: cover;
+}
+
+.commit-card__author {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.commit-sha {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.8rem;
+  color: var(--purple);
+  background: rgba(188, 140, 255, 0.1);
+  border: 1px solid rgba(188, 140, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: background var(--transition);
+  white-space: nowrap;
+}
+
+.commit-sha:hover {
+  background: rgba(188, 140, 255, 0.2);
+}
+
+.commit-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+.commit-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.commit-link:hover {
+  color: var(--blue);
+  background: rgba(88, 166, 255, 0.1);
+  text-decoration: none;
+}
+
+.commit-message {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Тело коммита (развёрнутое описание)
+   ============================================================ */
+.commit-body-section {
+  margin-bottom: 12px;
+}
+
+.commit-body-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 3px 10px 3px 8px;
+  transition: color var(--transition), background var(--transition),
+              border-color var(--transition);
+}
+
+.commit-body-toggle:hover {
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border-color: #444c56;
+}
+
+.commit-body-toggle .toggle-btn__arrow {
+  font-size: 0.6rem;
+  transition: transform var(--transition);
+}
+
+/* Внешний контейнер только для clip; визуальное оформление — внутри */
+.commit-body {
+  overflow: hidden;
+}
+
+.commit-body__inner {
+  padding: 18px 14px 10px;
+  border-left: 3px solid var(--border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+  background: var(--bg-elevated);
+}
+
+/* ============================================================
+   Статистика изменений
+   ============================================================ */
+.commit-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.stat--add { color: var(--green); }
+.stat--del { color: var(--red);   }
+
+.stats-bar {
+  display: flex;
+  height: 8px;
+  width: 80px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+
+.stats-bar__add {
+  background: var(--green);
+  transition: width 0.5s ease;
+}
+
+.stats-bar__del {
+  background: var(--red);
+}
+
+.stat-files {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: auto;
+}
+
+/* ============================================================
+   Нижняя панель карточки с кнопками раскрытия
+   ============================================================ */
+.commit-card__footer {
+  border-top: 1px solid var(--border-muted);
+  padding: 0;
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--transition), color var(--transition);
+}
+
+.toggle-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.toggle-btn__arrow {
+  display: inline-block;
+  transition: transform var(--transition);
+  font-size: 0.7rem;
+}
+
+.toggle-btn.open .toggle-btn__arrow {
+  transform: rotate(90deg);
+}

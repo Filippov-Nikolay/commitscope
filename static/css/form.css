@@ -1,0 +1,256 @@
+/* ============================================================
+   form.css — форма поиска, поля, история (dropdown), кнопки
+   ============================================================ */
+
+.search-form {
+  animation: fade-up 0.5s 0.2s ease both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-form__fields {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Одно поле формы */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 160px;
+  min-width: 140px;
+  max-width: 220px;
+  position: relative; /* якорь для выпадающего списка истории */
+}
+
+.field--small {
+  flex: 0 1 110px;
+  min-width: 100px;
+  max-width: 130px;
+}
+
+.field__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field__input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+
+.field__input::placeholder {
+  color: var(--text-muted);
+}
+
+.field__input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+}
+
+/* Когда у поля открыта история — скругляем только верхние углы у инпута */
+.field.has-dropdown .field__input {
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border-bottom-color: var(--border-muted);
+}
+
+/* ============================================================
+   История полей (выпадающий список)
+   ============================================================ */
+.field-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  max-height: 210px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.field-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 12px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.field-dropdown-item:hover {
+  background: rgba(88, 166, 255, 0.07);
+}
+
+.field-dropdown-item__text {
+  flex: 1;
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--transition);
+}
+
+.field-dropdown-item:hover .field-dropdown-item__text {
+  color: var(--text-primary);
+}
+
+.field-dropdown-item__remove {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+  line-height: 1;
+}
+
+.field-dropdown-item__remove:hover {
+  color: var(--red);
+  background: rgba(248, 81, 73, 0.12);
+}
+
+/* ============================================================
+   Кнопки формы
+   ============================================================ */
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 148px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+
+.btn-search:hover {
+  background: #79b8ff;
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-search:active {
+  transform: translateY(0);
+}
+
+.btn-search__idle,
+.btn-search__busy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.btn-search__busy {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.btn-ring {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+
+.btn-search.loading {
+  pointer-events: none;
+}
+
+.btn-search.loading .btn-search__idle {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.btn-search.loading .btn-search__busy {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-clear {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition),
+              background var(--transition);
+}
+
+.btn-clear:not(:disabled):hover {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(248, 81, 73, 0.08);
+}
+
+.btn-clear:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Ripple-эффект на кнопке очистки */
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--red);
+  pointer-events: none;
+  animation: ripple-out 0.5s ease-out forwards;
+}

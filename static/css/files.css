@@ -1,0 +1,110 @@
+/* ============================================================
+   files.css — список файлов коммита и diff
+   ============================================================ */
+
+/* Внешний контейнер только для clip; border переехал во __inner */
+.files-list {
+  overflow: hidden;
+}
+
+.files-list__inner {
+  border-top: 1px solid var(--border-muted);
+}
+
+.file-item {
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+.file-item__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  transition: background var(--transition);
+}
+
+.file-item__header:hover {
+  background: var(--bg-elevated);
+}
+
+.file-status {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-status--added    { background: rgba(63,185,80,.15);  color: var(--green);  }
+.file-status--modified { background: rgba(210,153,34,.12); color: var(--yellow); }
+.file-status--removed  { background: rgba(248,81,73,.15);  color: var(--red);    }
+.file-status--renamed  { background: rgba(88,166,255,.12); color: var(--blue);   }
+
+.file-item__name {
+  font-size: 0.82rem;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  color: var(--text-primary);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-item__stats {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.file-stat--add { font-size: 0.78rem; color: var(--green); font-weight: 600; }
+.file-stat--del { font-size: 0.78rem; color: var(--red);   font-weight: 600; }
+
+.diff-toggle {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.diff-toggle:hover {
+  color: var(--blue);
+  background: rgba(88, 166, 255, 0.1);
+}
+
+/* ============================================================
+   Diff (unified diff с подсветкой строк)
+   ============================================================ */
+.diff-view {
+  background: var(--bg-code);
+  border-top: 1px solid var(--border-muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.diff-line {
+  display: block;
+  padding: 1px 16px;
+  white-space: pre;
+  min-height: 20px;
+}
+
+.diff-line--add  { background: rgba(63,185,80,.1);   color: var(--green); }
+.diff-line--del  { background: rgba(248,81,73,.1);   color: var(--red);   }
+.diff-line--hunk { background: rgba(88,166,255,.08); color: var(--blue);  }
+.diff-line--ctx  { color: var(--text-secondary); }
