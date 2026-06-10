@@ -16,8 +16,7 @@ import pytest
 import requests
 import responses as resp_mock
 
-from github_parser.client import BASE_URL, get
-
+from github_parser.client import get
 
 # =============================================================================
 # Успешные запросы
@@ -96,7 +95,9 @@ def test_get_sends_github_api_version_header():
 @resp_mock.activate
 def test_get_raises_runtime_error_on_404():
     """HTTP 404 преобразуется в RuntimeError с кодом ошибки в сообщении."""
-    resp_mock.add(resp_mock.GET, "https://example.com/api", json={"message": "Not Found"}, status=404)
+    resp_mock.add(
+        resp_mock.GET, "https://example.com/api", json={"message": "Not Found"}, status=404
+    )
 
     with pytest.raises(RuntimeError, match="404"):
         get("https://example.com/api", token=None)
@@ -105,7 +106,9 @@ def test_get_raises_runtime_error_on_404():
 @resp_mock.activate
 def test_get_raises_runtime_error_on_500():
     """HTTP 500 преобразуется в RuntimeError."""
-    resp_mock.add(resp_mock.GET, "https://example.com/api", body="Internal Server Error", status=500)
+    resp_mock.add(
+        resp_mock.GET, "https://example.com/api", body="Internal Server Error", status=500
+    )
 
     with pytest.raises(RuntimeError, match="500"):
         get("https://example.com/api", token=None)
@@ -114,7 +117,9 @@ def test_get_raises_runtime_error_on_500():
 @resp_mock.activate
 def test_get_raises_runtime_error_on_401():
     """HTTP 401 (неверный токен) преобразуется в RuntimeError."""
-    resp_mock.add(resp_mock.GET, "https://example.com/api", json={"message": "Bad credentials"}, status=401)
+    resp_mock.add(
+        resp_mock.GET, "https://example.com/api", json={"message": "Bad credentials"}, status=401
+    )
 
     with pytest.raises(RuntimeError, match="401"):
         get("https://example.com/api", token="invalid-token")

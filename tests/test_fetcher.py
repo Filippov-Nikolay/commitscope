@@ -11,7 +11,6 @@
 """
 
 import responses as resp_mock
-import pytest
 
 from github_parser.client import BASE_URL
 from github_parser.fetcher import (
@@ -19,7 +18,6 @@ from github_parser.fetcher import (
     fetch_commit_details,
     fetch_commits,
 )
-
 
 # =============================================================================
 # fetch_commits - получение списка коммитов
@@ -157,7 +155,7 @@ def test_fetch_commit_details_uses_correct_url():
 
     fetch_commit_details("myorg", "myrepo", "deadbeef", token=None)
 
-    assert f"/repos/myorg/myrepo/commits/deadbeef" in resp_mock.calls[0].request.url
+    assert "/repos/myorg/myrepo/commits/deadbeef" in resp_mock.calls[0].request.url
 
 
 # =============================================================================

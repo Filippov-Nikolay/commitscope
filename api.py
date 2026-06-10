@@ -170,7 +170,10 @@ async def stream_commits(
                 report.append(entry)
 
                 # Отправляем готовый коммит - фронтенд сразу его покажет
-                yield f"data: {json.dumps({'type': 'progress', 'current': i, 'total': total, 'entry': entry})}\n\n"
+                payload = json.dumps(
+                    {"type": "progress", "current": i, "total": total, "entry": entry}
+                )
+                yield f"data: {payload}\n\n"
 
             # Выводим Rich-отчёт в консоль сервера после завершения всей загрузки
             # to_thread нужен потому что print_summary использует синхронный Rich

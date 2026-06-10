@@ -187,7 +187,6 @@ def build_report(
             # Берём первую строку сообщения - это «заголовок» коммита по соглашению Git
             msg    = raw["commit"]["message"].split("\n")[0]
             author = raw["commit"]["author"]["name"]
-            date   = raw["commit"]["author"]["date"]
 
             # Обновляем описание в прогресс-баре, чтобы видеть текущий коммит
             progress.update(
@@ -250,7 +249,8 @@ def print_summary(
         meta.add_column(style="bold dim", width=12)
         meta.add_column()
 
-        meta.add_row("SHA",        f"[bold cyan]{item['short']}[/bold cyan]  [dim]{item['sha'][7:]}[/dim]")
+        sha_cell = f"[bold cyan]{item['short']}[/bold cyan]  [dim]{item['sha'][7:]}[/dim]"
+        meta.add_row("SHA", sha_cell)
         meta.add_row("Автор",      item["author"])
         meta.add_row("Дата",       date_short)
         meta.add_row("Ссылка",     f"[link={item['url']}][blue]{item['url']}[/blue][/link]")

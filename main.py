@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Импортируем только после load_dotenv, чтобы переменные уже были в окружении
-from github_parser.report import build_report, print_summary, save_report
+from github_parser.report import build_report, print_summary, save_report  # noqa: E402
 
 
 def setup_logging(verbose: bool) -> None:

@@ -20,7 +20,6 @@ import pytest
 from github_parser.report import build_report, save_report
 from github_parser.types import CommitEntry, CommitStats, FileChange
 
-
 # =============================================================================
 # Тестовые данные (фикстуры)
 # =============================================================================
