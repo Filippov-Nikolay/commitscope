@@ -7,6 +7,10 @@
   border-bottom: 1px solid var(--border-muted);
   padding: 56px 0 48px;
   text-align: center;
+  /* Создаём stacking context, чтобы дропдауны истории всегда
+     рисовались поверх зоны результатов, которая идёт ниже в DOM */
+  position: relative;
+  z-index: 10;
 }
 
 .hero__title {
