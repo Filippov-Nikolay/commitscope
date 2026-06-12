@@ -91,3 +91,69 @@
   flex-direction: column;
   gap: 12px;
 }
+
+/* ============================================================
+   Кнопка скачивания результатов
+   ============================================================ */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition),
+              background var(--transition);
+}
+
+.btn-download:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: rgba(88, 166, 255, 0.08);
+}
+
+/* Обёртка двух иконок (download / check) */
+.btn-download__icon-wrap {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.btn-download__icon-wrap .icon-download,
+.btn-download__icon-wrap .icon-check {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* Галочка скрыта по умолчанию */
+.btn-download__icon-wrap .icon-check {
+  opacity: 0;
+  transform: scale(0.5) rotate(-30deg);
+}
+
+/* Состояние «только что скачано» */
+.btn-download.is-downloaded {
+  animation: download-success 0.35s ease;
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(63, 185, 80, 0.08);
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.btn-download.is-downloaded .icon-download {
+  opacity: 0;
+  transform: scale(0.5) translateY(4px);
+}
+
+.btn-download.is-downloaded .icon-check {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}

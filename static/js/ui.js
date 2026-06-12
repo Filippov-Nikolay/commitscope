@@ -67,6 +67,34 @@ function showToast(message) {
 }
 
 // ===========================================================
+// Скачивание результатов
+// ===========================================================
+
+function downloadResults() {
+  const raw = localStorage.getItem('gh_results');
+  if (!raw) return;
+
+  const { commits, owner, repo, branch } = JSON.parse(raw);
+  const date     = new Date().toISOString().slice(0, 10);
+  const filename = `commitscope_${owner}_${repo}_${branch}_${date}.json`;
+  const blob     = new Blob([JSON.stringify(commits, null, 2)], { type: 'application/json' });
+  const url      = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  const btn = document.getElementById('btn-download');
+  if (!btn) return;
+  btn.classList.add('is-downloaded');
+  setTimeout(() => btn.classList.remove('is-downloaded'), 2000);
+}
+
+// ===========================================================
 // Ripple-эффект
 // ===========================================================
 
