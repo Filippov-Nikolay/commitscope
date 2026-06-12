@@ -44,10 +44,13 @@ async function handleSubmit(event) {
   const owner      = document.getElementById('owner').value.trim();
   const repo       = document.getElementById('repo').value.trim();
   const branch     = document.getElementById('branch').value.trim() || 'main';
-  const author     = document.getElementById('author').value.trim();
+  const authorRaw  = document.getElementById('author').value;
+  const author     = authorRaw.split(',').map(a => a.trim()).filter(Boolean).join(', ');
   const maxCommits = document.getElementById('max-commits').value.trim();
 
   if (!owner || !repo) return;
+
+  document.getElementById('author').value = author; // показываем нормализованный вид
 
   historyAdd('owner', owner);
   historyAdd('repo', repo);
