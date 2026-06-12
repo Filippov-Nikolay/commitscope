@@ -9,7 +9,7 @@
  */
 
 const HISTORY_MAX = 10;
-const HISTORY_IDS = ['owner', 'repo', 'branch', 'max-commits'];
+const HISTORY_IDS = ['owner', 'repo', 'branch', 'author', 'max-commits'];
 
 // ===========================================================
 // CRUD истории в localStorage
@@ -42,8 +42,8 @@ function historyRemove(id, value) {
 // ===========================================================
 
 /** Сохраняет последние использованные значения полей */
-function saveLastValues(owner, repo, branch, maxCommits) {
-  localStorage.setItem('gh_last', JSON.stringify({ owner, repo, branch, maxCommits }));
+function saveLastValues(owner, repo, branch, maxCommits, author) {
+  localStorage.setItem('gh_last', JSON.stringify({ owner, repo, branch, maxCommits, author }));
 }
 
 /** Восстанавливает значения полей из последнего сохранённого состояния */
@@ -54,6 +54,7 @@ function restoreLastValues() {
     if (saved.owner)      document.getElementById('owner').value       = saved.owner;
     if (saved.repo)       document.getElementById('repo').value        = saved.repo;
     if (saved.branch)     document.getElementById('branch').value      = saved.branch;
+    if (saved.author)     document.getElementById('author').value      = saved.author;
     if (saved.maxCommits) document.getElementById('max-commits').value = saved.maxCommits;
   } catch { /* повреждённый localStorage — просто игнорируем */ }
 }
@@ -65,7 +66,7 @@ function restoreSavedResults() {
     if (!saved?.commits?.length) { updateClearBtn(); return; }
     renderResults(
       saved.commits,
-      { owner: saved.owner, repo: saved.repo, branch: saved.branch },
+      { owner: saved.owner, repo: saved.repo, branch: saved.branch, author: saved.author || null },
       { scroll: false },
     );
   } catch {

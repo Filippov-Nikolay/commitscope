@@ -44,6 +44,7 @@ async function handleSubmit(event) {
   const owner      = document.getElementById('owner').value.trim();
   const repo       = document.getElementById('repo').value.trim();
   const branch     = document.getElementById('branch').value.trim() || 'main';
+  const author     = document.getElementById('author').value.trim();
   const maxCommits = document.getElementById('max-commits').value.trim();
 
   if (!owner || !repo) return;
@@ -51,16 +52,17 @@ async function handleSubmit(event) {
   historyAdd('owner', owner);
   historyAdd('repo', repo);
   historyAdd('branch', branch);
+  if (author)     historyAdd('author', author);
   if (maxCommits) historyAdd('max-commits', maxCommits);
-  saveLastValues(owner, repo, branch, maxCommits);
+  saveLastValues(owner, repo, branch, maxCommits, author);
 
   showLoading();
   setButtonLoading(true);
 
   try {
-    const commits = await fetchCommits(owner, repo, branch, maxCommits || null);
+    const commits = await fetchCommits(owner, repo, branch, maxCommits || null, author || null);
     await dissolveLoading();
-    renderResults(commits, { owner, repo, branch });
+    renderResults(commits, { owner, repo, branch, author: author || null });
   } catch (err) {
     await dissolveLoading();
     showError(err.message);

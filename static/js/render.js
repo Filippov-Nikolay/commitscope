@@ -10,7 +10,7 @@
 /**
  * Отрисовывает список коммитов в DOM и сохраняет результат в localStorage.
  */
-function renderResults(commits, { owner, repo, branch }, { scroll = true } = {}) {
+function renderResults(commits, { owner, repo, branch, author = null }, { scroll = true } = {}) {
   hideAllStates();
 
   if (!commits || commits.length === 0) {
@@ -19,7 +19,7 @@ function renderResults(commits, { owner, repo, branch }, { scroll = true } = {})
   }
 
   document.getElementById('results-header').innerHTML = buildResultsHeader(
-    commits, owner, repo, branch,
+    commits, owner, repo, branch, author,
   );
 
   const list = document.getElementById('commits-list');
@@ -30,7 +30,7 @@ function renderResults(commits, { owner, repo, branch }, { scroll = true } = {})
   updateClearBtn();
 
   try {
-    localStorage.setItem('gh_results', JSON.stringify({ commits, owner, repo, branch }));
+    localStorage.setItem('gh_results', JSON.stringify({ commits, owner, repo, branch, author }));
   } catch { /* quota exceeded — просто не сохраняем */ }
 
   if (scroll) {
@@ -39,13 +39,23 @@ function renderResults(commits, { owner, repo, branch }, { scroll = true } = {})
 }
 
 /** Строит HTML шапки с метаданными о запросе */
-function buildResultsHeader(commits, owner, repo, branch) {
-  const totalAdd = commits.reduce((s, c) => s + c.stats.additions, 0);
-  const totalDel = commits.reduce((s, c) => s + c.stats.deletions, 0);
+function buildResultsHeader(commits, owner, repo, branch, author) {
+  const totalAdd   = commits.reduce((s, c) => s + c.stats.additions, 0);
+  const totalDel   = commits.reduce((s, c) => s + c.stats.deletions, 0);
+  const authorBadge = author
+    ? `<span class="results-header__badge results-header__badge--author">
+         <svg viewBox="0 0 16 16" fill="currentColor" width="11" height="11">
+           <path d="M10.5 5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zm.061 3.073a4 4 0
+             0 0-8.123 0 .75.75 0 0 0 .74.877h6.644a.75.75 0 0 0 .74-.877z"/>
+         </svg>
+         ${escHtml(author)}
+       </span>`
+    : '';
 
   return `
     <div class="results-header__title">${escHtml(owner)}/${escHtml(repo)}</div>
     <span class="results-header__badge">⎇ ${escHtml(branch)}</span>
+    ${authorBadge}
     <span class="results-header__badge" style="color:var(--green)">+${totalAdd}</span>
     <span class="results-header__badge" style="color:var(--red)">-${totalDel}</span>
     <span class="results-header__count">${commits.length} коммитов</span>

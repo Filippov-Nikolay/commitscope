@@ -21,9 +21,10 @@ function updateLoadingText(text) {
  *
  * @returns {Promise<Array>} список коммитов (разрешается когда всё загружено)
  */
-function fetchCommits(owner, repo, branch, maxCommits) {
+function fetchCommits(owner, repo, branch, maxCommits, author) {
   const params = new URLSearchParams({ owner, repo, branch });
   if (maxCommits) params.set('max_commits', maxCommits);
+  if (author)     params.set('author', author);
 
   return new Promise((resolve, reject) => {
     const source    = new EventSource(`/commits/stream?${params.toString()}`);
